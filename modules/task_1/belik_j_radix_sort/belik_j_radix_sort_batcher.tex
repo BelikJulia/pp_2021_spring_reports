@@ -802,14 +802,14 @@ TEST(Radix_Sort_Merge_Batcher, Test_Sort_STD_4thr) {
 	std::sort(vec.begin(), vec.end());
 	ASSERT_EQ(v1, vec);
 }
-TEST(Radix_Sort_Merge_Batcher, Test_Sort_Par_Seq) {
+TEST(Radix_Sort_Merge_Batcher, Test_Sort_Par) {
 	std::vector<double> vec;
 	const int n = 20;
 	int thr = 4;
 	vec = Vector(n, -10000.0, 10000.0);
-	std::vector<double> vec1 = vec;
-	std::vector<double> v1 = MergeBatcherPar(vec, n, thr);
-	std::vector<double> v2 = MergeBatcherSeq(vec, n, thr);
+	std::vector<double> v1 = MergeBatcherOMP(vec, n, thr);
+	std::vector<double> v2 = MergeBatcherTBB(vec, n, thr);
+	std::vector<double> v3 = MergeBatcherSTD(vec, n, thr);
 	ASSERT_EQ(v1, v2);
 }
 int main(int argc, char **argv) {
